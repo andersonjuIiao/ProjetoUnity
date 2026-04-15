@@ -2,20 +2,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject endGamePanel;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (GameController.gameOver)
-        {
-            endGamePanel.SetActive(true);
-        }
-        
-    }
+    // Este script será substituído pelo HUDManager em breve.
+    // Por enquanto deixamos vazio para parar os erros.
 }

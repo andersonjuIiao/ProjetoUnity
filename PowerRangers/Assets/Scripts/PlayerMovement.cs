@@ -3,34 +3,30 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    AudioSource audio;
+    private AudioSource audioSource;
     public float speed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        audio= rb.GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-
-        rb.MovePosition(rb.position + movement.normalized*speed*Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement.normalized * speed * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Coletavel")
+        if (other.CompareTag("Coletavel"))
         {
-            audio.Play();
-            GameController.Collect();
+            audioSource.Play();
             Destroy(other.gameObject);
         }
-        
     }
 }
