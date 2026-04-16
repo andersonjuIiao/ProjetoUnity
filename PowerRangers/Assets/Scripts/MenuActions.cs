@@ -12,4 +12,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void AbrirCreditos()
+    {
+        SceneManager.LoadScene("Creditos");
+    }
 }
