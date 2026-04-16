@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
             if (timerRanger <= 0)
                 VoltarParaHumano();
 
-            // Ataque com J ou botão do controle
             if (Input.GetKey(KeyCode.J) && timerAtaque <= 0)
                 Atirar();
         }
@@ -63,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-        // Guarda última direção para o projétil
         if (movement != Vector2.zero)
             ultimaDirecao = movement.normalized;
 
@@ -84,10 +82,10 @@ public class PlayerMovement : MonoBehaviour
         estado = PlayerState.Transformando;
         shardsColetados = 0;
         HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
-        Invoke("AtivarRanger", 1f);
+        TransformationController.Instance.IniciarAnimacao();
     }
 
-    void AtivarRanger()
+    public void AtivarRanger()
     {
         estado = PlayerState.Ranger;
         timerRanger = duracaoRanger;
