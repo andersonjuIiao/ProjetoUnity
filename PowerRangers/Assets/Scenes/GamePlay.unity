@@ -3307,7 +3307,7 @@ MonoBehaviour:
   vidasIniciais: 3
   tempoDaPartida: 60
   inimigosParaBonus: 5
-  tempoBonus: 10
+  pontosBonus: 50
   score: 0
   vidas: 0
   tempoRestante: 0
