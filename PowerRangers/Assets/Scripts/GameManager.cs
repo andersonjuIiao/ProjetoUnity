@@ -9,10 +9,15 @@ public class GameManager : MonoBehaviour
     public int vidasIniciais = 3;
     public float tempoDaPartida = 60f;
 
+    [Header("Bônus de Tempo")]
+    public int inimigosParaBonus = 5;
+    public float tempoBonus = 10f;
+
     [HideInInspector] public int score = 0;
     [HideInInspector] public int vidas;
     [HideInInspector] public float tempoRestante;
     [HideInInspector] public bool jogoAtivo = false;
+    [HideInInspector] public int inimigosDerrotados = 0;
 
     public static int scoreFinal = 0;
     public static float tempoFinal = 0f;
@@ -43,7 +48,7 @@ public class GameManager : MonoBehaviour
         if (tempoRestante <= 0)
         {
             tempoRestante = 0;
-            GameOver(false);
+            GameOver(true);
         }
     }
 
@@ -51,6 +56,17 @@ public class GameManager : MonoBehaviour
     {
         score += pontos;
         HUDManager.Instance?.AtualizarScore(score);
+    }
+
+    public void InimigoDerrotado()
+    {
+        inimigosDerrotados++;
+
+        if (inimigosDerrotados % inimigosParaBonus == 0)
+        {
+            tempoRestante += tempoBonus;
+            HUDManager.Instance?.MostrarBonus("+10s!");
+        }
     }
 
     public void PerderVida()
@@ -71,6 +87,9 @@ public class GameManager : MonoBehaviour
         tempoFinal = tempoRestante;
         venceu = ganhou;
 
-        SceneManager.LoadScene("GameOver");
+        if (ganhou)
+            SceneManager.LoadScene("Vitoria");
+        else
+            SceneManager.LoadScene("Derrota");
     }
 }

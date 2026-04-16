@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Transformação")]
     public float duracaoRanger = 10f;
+    public float tempoBonusRanger = 3f;
+    public float tempoReducaoDano = 2f;
     private float timerRanger = 0f;
 
     [Header("Ataque")]
@@ -31,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+
+        // Começa mostrando energia de shards
+        HUDManager.Instance?.MostrarEnergia(true);
+        HUDManager.Instance?.MostrarTimerRanger(false);
+        HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
     }
 
     void Update()
@@ -39,6 +46,8 @@ public class PlayerMovement : MonoBehaviour
         {
             timerRanger -= Time.deltaTime;
             timerAtaque -= Time.deltaTime;
+
+            HUDManager.Instance?.AtualizarTimerRanger(timerRanger, duracaoRanger);
 
             if (timerRanger <= 0)
                 VoltarParaHumano();
@@ -90,24 +99,56 @@ public class PlayerMovement : MonoBehaviour
         estado = PlayerState.Ranger;
         timerRanger = duracaoRanger;
         GetComponent<SpriteRenderer>().color = Color.yellow;
+
+        // Troca HUD para mostrar timer Ranger
+        HUDManager.Instance?.MostrarEnergia(false);
+        HUDManager.Instance?.MostrarTimerRanger(true);
+        HUDManager.Instance?.AtualizarTimerRanger(timerRanger, duracaoRanger);
     }
 
     void VoltarParaHumano()
     {
         estado = PlayerState.Humano;
+        shardsColetados = 0;
         GetComponent<SpriteRenderer>().color = Color.red;
+
+        // Troca HUD para mostrar energia de shards
+        HUDManager.Instance?.MostrarTimerRanger(false);
+        HUDManager.Instance?.MostrarEnergia(true);
+        HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
     }
 
     public void ColetarShard()
     {
-        if (estado != PlayerState.Humano) return;
+        if (estado == PlayerState.Humano)
+        {
+            // Limita o máximo em shardsNecessarios
+            if (shardsColetados >= shardsNecessarios) return;
 
-        shardsColetados++;
-        audioSource.Play();
-        HUDManager.Instance?.AtualizarEnergia(shardsColetados, shardsNecessarios);
+            shardsColetados++;
+            audioSource.Play();
+            HUDManager.Instance?.AtualizarEnergia(shardsColetados, shardsNecessarios);
 
-        if (shardsColetados >= shardsNecessarios)
-            Debug.Log("Energia cheia! Pressione Espaço para transformar!");
+            if (shardsColetados >= shardsNecessarios)
+                Debug.Log("Energia cheia! Pressione Espaço para transformar!");
+        }
+        else if (estado == PlayerState.Ranger)
+        {
+            timerRanger += tempoBonusRanger;
+            audioSource.Play();
+            HUDManager.Instance?.MostrarBonus("+" + tempoBonusRanger + "s Ranger!");
+        }
+    }
+
+    public void ReceberDanoRanger()
+    {
+        if (estado != PlayerState.Ranger) return;
+
+        timerRanger -= tempoReducaoDano;
+        HUDManager.Instance?.MostrarBonus("-" + tempoReducaoDano + "s!");
+
+        if (timerRanger <= 0)
+            VoltarParaHumano();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

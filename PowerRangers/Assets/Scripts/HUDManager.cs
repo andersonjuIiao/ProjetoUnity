@@ -10,6 +10,12 @@ public class HUDManager : MonoBehaviour
     public TextMeshProUGUI textoTempo;
     public TextMeshProUGUI textoVidas;
     public TextMeshProUGUI textoEnergia;
+    public TextMeshProUGUI textoTimerRanger;
+
+    [Header("Bonus de Tempo")]
+    public TextMeshProUGUI textoBonus;
+    public float tempoBonusVisivel = 2f;
+    private float timerBonus = 0f;
 
     void Awake()
     {
@@ -17,6 +23,16 @@ public class HUDManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        if (timerBonus > 0)
+        {
+            timerBonus -= Time.deltaTime;
+            if (timerBonus <= 0)
+                textoBonus.gameObject.SetActive(false);
+        }
     }
 
     public void AtualizarScore(int score)
@@ -40,6 +56,34 @@ public class HUDManager : MonoBehaviour
     public void AtualizarEnergia(int atual, int maximo)
     {
         if (textoEnergia != null)
-            textoEnergia.text = "Energia: " + atual + "/" + maximo;
+            textoEnergia.text = "Shards: " + atual + "/" + maximo;
+    }
+
+    public void AtualizarTimerRanger(float tempo, float tempoMax)
+    {
+        if (textoTimerRanger != null)
+            textoTimerRanger.text = "Ranger: " + Mathf.CeilToInt(tempo) + "s";
+    }
+
+    public void MostrarEnergia(bool mostrar)
+    {
+        if (textoEnergia != null)
+            textoEnergia.gameObject.SetActive(mostrar);
+    }
+
+    public void MostrarTimerRanger(bool mostrar)
+    {
+        if (textoTimerRanger != null)
+            textoTimerRanger.gameObject.SetActive(mostrar);
+    }
+
+    public void MostrarBonus(string mensagem)
+    {
+        if (textoBonus != null)
+        {
+            textoBonus.text = mensagem;
+            textoBonus.gameObject.SetActive(true);
+            timerBonus = tempoBonusVisivel;
+        }
     }
 }

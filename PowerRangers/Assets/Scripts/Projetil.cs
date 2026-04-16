@@ -22,6 +22,7 @@ public class Projetil : MonoBehaviour
         if (other.CompareTag("Inimigo"))
         {
             GameManager.Instance.AdicionarScore(10);
+            GameManager.Instance.InimigoDerrotado();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
