@@ -2673,6 +2673,8 @@ GameObject:
   - component: {fileID: 2100468859}
   - component: {fileID: 2100468858}
   - component: {fileID: 2100468857}
+  - component: {fileID: 2100468861}
+  - component: {fileID: 2100468860}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2729,6 +2731,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2100468860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100468856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668f19440001f294d8901f1eab6fe5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inimigoPrefab: {fileID: 8483948730837846273, guid: d90832dcf641eed48a8b40f536ee1f92, type: 3}
+  maxInimigos: 5
+  intervaloInicial: 5
+  intervaloMinimo: 1.5
+  reducaoIntervalo: 0.1
+  xMin: -6.5
+  xMax: 6.5
+  yMin: -3.5
+  yMax: 3.5
+--- !u!114 &2100468861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100468856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad955142313c994d8c267234469fdd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shardPrefab: {fileID: 4329258190463586543, guid: 7d6dd3a36f3460a40afb9cabfa4a0b7b, type: 3}
+  maxShardsTela: 5
+  intervaloSpawn: 3
+  xMin: -6.5
+  xMax: 6.5
+  yMin: -3.5
+  yMax: 3.5
 --- !u!1001 &1952862164561013423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2737,8 +2779,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 16071556987102538, guid: d875a0bebb0697c419be867eabc3700c, type: 3}
+      propertyPath: projetilPrefab
+      value: 
+      objectReference: {fileID: 8157534001552409293, guid: 8fbaa1cab3a0a98468a60a4aeaa856c4, type: 3}
     - target: {fileID: 577927014371233412, guid: d875a0bebb0697c419be867eabc3700c, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 577927014371233412, guid: d875a0bebb0697c419be867eabc3700c, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7624606665234478106, guid: d875a0bebb0697c419be867eabc3700c, type: 3}

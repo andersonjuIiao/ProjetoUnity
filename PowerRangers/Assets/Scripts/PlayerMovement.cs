@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Estados possíveis do jogador
     public enum PlayerState { Humano, Transformando, Ranger }
     public PlayerState estado = PlayerState.Humano;
 
@@ -18,6 +17,13 @@ public class PlayerMovement : MonoBehaviour
     public float duracaoRanger = 10f;
     private float timerRanger = 0f;
 
+    [Header("Ataque")]
+    public GameObject projetilPrefab;
+    public Transform pontoDeDisparo;
+    public float intervaloAtaque = 0.3f;
+    private float timerAtaque = 0f;
+    private Vector2 ultimaDirecao = Vector2.right;
+
     private Rigidbody2D rb;
     private AudioSource audioSource;
 
@@ -29,15 +35,19 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Conta o timer quando está no estado Ranger
         if (estado == PlayerState.Ranger)
         {
             timerRanger -= Time.deltaTime;
+            timerAtaque -= Time.deltaTime;
+
             if (timerRanger <= 0)
                 VoltarParaHumano();
+
+            // Ataque com J ou botão do controle
+            if (Input.GetKey(KeyCode.J) && timerAtaque <= 0)
+                Atirar();
         }
 
-        // Pressionar Espaço para transformar (só se tiver shards suficientes)
         if (Input.GetKeyDown(KeyCode.Space) && estado == PlayerState.Humano)
         {
             if (shardsColetados >= shardsNecessarios)
@@ -47,15 +57,26 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Bloqueia movimento durante a transformação
         if (estado == PlayerState.Transformando) return;
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
+        // Guarda última direção para o projétil
+        if (movement != Vector2.zero)
+            ultimaDirecao = movement.normalized;
+
         float velocidade = (estado == PlayerState.Ranger) ? velocidadeRanger : velocidadeHumano;
         rb.MovePosition(rb.position + movement.normalized * velocidade * Time.fixedDeltaTime);
+    }
+
+    void Atirar()
+    {
+        timerAtaque = intervaloAtaque;
+        Vector3 posDisparo = pontoDeDisparo != null ? pontoDeDisparo.position : transform.position;
+        GameObject proj = Instantiate(projetilPrefab, posDisparo, Quaternion.identity);
+        proj.GetComponent<Projetil>().Inicializar(ultimaDirecao);
     }
 
     void IniciarTransformacao()
@@ -63,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         estado = PlayerState.Transformando;
         shardsColetados = 0;
         HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
-        // Por enquanto vai direto para Ranger (animação virá depois)
         Invoke("AtivarRanger", 1f);
     }
 
