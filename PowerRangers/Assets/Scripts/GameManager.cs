@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
     public int vidasIniciais = 3;
     public float tempoDaPartida = 60f;
 
-    [Header("Bônus de Tempo")]
+    [Header("Bônus de Score")]
     public int inimigosParaBonus = 5;
-    public float tempoBonus = 10f;
+    public int pontosBonus = 50;
 
     [HideInInspector] public int score = 0;
     [HideInInspector] public int vidas;
@@ -64,8 +64,8 @@ public class GameManager : MonoBehaviour
 
         if (inimigosDerrotados % inimigosParaBonus == 0)
         {
-            tempoRestante += tempoBonus;
-            HUDManager.Instance?.MostrarBonus("+10s!");
+            AdicionarScore(pontosBonus);
+            HUDManager.Instance?.MostrarBonus("+50 pontos!");
         }
     }
 
