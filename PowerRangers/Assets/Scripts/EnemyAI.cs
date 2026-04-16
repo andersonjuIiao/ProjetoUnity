@@ -25,8 +25,19 @@ public class EnemyAI : MonoBehaviour
         if (player == null) return;
         if (!GameManager.Instance.jogoAtivo) return;
 
+        float distancia = Vector2.Distance(transform.position, player.position);
         Vector2 direcao = (player.position - transform.position).normalized;
-        rb.MovePosition(rb.position + direcao * velocidade * Time.fixedDeltaTime);
+
+        // Mantém distância mínima de 0.8 unidades do jogador
+        if (distancia > 0.8f)
+        {
+            rb.MovePosition(rb.position + direcao * velocidade * Time.fixedDeltaTime);
+        }
+        else
+        {
+            // Para de se mover quando está perto o suficiente
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
