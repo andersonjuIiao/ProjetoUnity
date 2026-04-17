@@ -14,6 +14,10 @@ public class AnimacaoResultado : MonoBehaviour
     public GameObject canvasAnimacao;
     public GameObject canvasResultado;
 
+    [Header("Audio")]
+    public AudioClip audioAnimacao;
+    private AudioSource audioSource;
+
     private float timerFrame = 0f;
     private int frameAtual = 0;
     private int totalFrames;
@@ -27,9 +31,14 @@ public class AnimacaoResultado : MonoBehaviour
         larguraFrame = 1f / colunas;
         alturaFrame = 1f / linhas;
 
-        // Mostra animação e esconde resultado
+        audioSource = GetComponent<AudioSource>();
+
         canvasAnimacao.SetActive(true);
         canvasResultado.SetActive(false);
+
+        // Toca o áudio da animação
+        if (audioSource != null && audioAnimacao != null)
+            audioSource.PlayOneShot(audioAnimacao);
 
         AtualizarFrame();
     }
@@ -69,13 +78,24 @@ public class AnimacaoResultado : MonoBehaviour
 
     public void PularAnimacao()
     {
+        if (audioSource != null)
+            audioSource.Stop();
+
         FinalizarAnimacao();
     }
-
     void FinalizarAnimacao()
     {
         animando = false;
         canvasAnimacao.SetActive(false);
         canvasResultado.SetActive(true);
+
+        // Toca música de resultado após animação
+        VitoriaManager vitoriaManager = GetComponent<VitoriaManager>();
+        if (vitoriaManager != null)
+            vitoriaManager.IniciarMusica();
+
+        DerrotaManager derrotaManager = GetComponent<DerrotaManager>();
+        if (derrotaManager != null)
+            derrotaManager.IniciarMusica();
     }
 }

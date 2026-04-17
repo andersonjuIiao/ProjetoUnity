@@ -1508,6 +1508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textoScore: {fileID: 1880297255}
   textoTempo: {fileID: 740666084}
+  musicaVitoria: {fileID: 1475731156}
 --- !u!4 &1475731155
 Transform:
   m_ObjectHideFlags: 0
@@ -1535,7 +1536,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f56c68ae3024abb4d9f45cc9697e3721, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
@@ -1639,6 +1640,7 @@ MonoBehaviour:
   frameRate: 10
   canvasAnimacao: {fileID: 1850481276}
   canvasResultado: {fileID: 187416803}
+  audioAnimacao: {fileID: 8300000, guid: 44f0434593d843f4cb2129af995dd6a5, type: 3}
 --- !u!1 &1783881601
 GameObject:
   m_ObjectHideFlags: 0
