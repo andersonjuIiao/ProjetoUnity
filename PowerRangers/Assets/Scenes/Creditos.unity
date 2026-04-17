@@ -290,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 115}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &623200719
@@ -313,8 +313,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Desenvolvido por: Juli\xE3o\r\n\r\nAssets:\r\n- Sprites: [coloque aqui]\r\n-
-    Audio: [coloque aqui]\r\n\r\nPower Rangers \xE9 propriedade da Hasbro"
+  m_text: "Desenvolvido por:\r\nAntonio Anderson de Araujo Juli\xE3o\r\n\r\nAssets:\r\nSprites:
+    Power Rangers For\xE7a do Tempo (Saban Brands/Hasbro)\r\n\xC1udios: S\xE9rie
+    Power Rangers For\xE7a do Tempo e Pixabay (pixabay.com)\r\nImagens: Google Images
+    e ChatGPT (OpenAI)\r\n\r\nFerramentas:\r\nUnity 6 | ChatGPT (OpenAI) | Claude
+    (Anthropic)\r\n\r\nPower Rangers \xE9 propriedade da Hasbro/Saban Brands.\r\nEste
+    jogo foi desenvolvido para fins educacionais."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -750,7 +754,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1901117147
@@ -925,7 +929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 150}
+  m_AnchoredPosition: {x: 0, y: 260}
   m_SizeDelta: {x: 400, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985321691
