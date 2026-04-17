@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 posDisparo = pontoDeDisparo != null ? pontoDeDisparo.position : transform.position;
         GameObject proj = Instantiate(projetilPrefab, posDisparo, Quaternion.identity);
         proj.GetComponent<Projetil>().Inicializar(ultimaDirecao);
+        AudioManager.Instance?.TocarDisparo();
     }
 
     void IniciarTransformacao()
@@ -122,11 +123,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (estado == PlayerState.Humano)
         {
-            // Limita o máximo em shardsNecessarios
             if (shardsColetados >= shardsNecessarios) return;
 
             shardsColetados++;
-            audioSource.Play();
+            AudioManager.Instance?.TocarColeta();
             HUDManager.Instance?.AtualizarEnergia(shardsColetados, shardsNecessarios);
 
             if (shardsColetados >= shardsNecessarios)
@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         else if (estado == PlayerState.Ranger)
         {
             timerRanger += tempoBonusRanger;
-            audioSource.Play();
+            AudioManager.Instance?.TocarColeta();
             HUDManager.Instance?.MostrarBonus("+" + tempoBonusRanger + "s Ranger!");
         }
     }

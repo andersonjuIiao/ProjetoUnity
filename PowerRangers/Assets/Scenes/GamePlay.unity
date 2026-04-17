@@ -3266,6 +3266,7 @@ GameObject:
   - component: {fileID: 2100468860}
   - component: {fileID: 2100468862}
   - component: {fileID: 2100468863}
+  - component: {fileID: 2100468864}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3484,6 +3485,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2100468864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100468856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f65e4a48fd15c48b2eaa96473375cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  somDano: {fileID: 8300000, guid: 08ff8a5ab40287b4abbefbd8329625cf, type: 3}
+  somInimigoMorto: {fileID: 8300000, guid: 4b031b8ac3415e84ab77ad2f5b41fe00, type: 3}
+  somDisparo: {fileID: 8300000, guid: f8888732dedb3be43b7b25833f55f51c, type: 3}
+  somColeta: {fileID: 8300000, guid: 263f52429351bfb43acffdae364c4705, type: 3}
 --- !u!1 &2114818588
 GameObject:
   m_ObjectHideFlags: 0

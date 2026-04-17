@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         if (timerCooldown > 0) return;
 
         timerCooldown = cooldownDano;
+        AudioManager.Instance?.TocarDano();
         GameManager.Instance.PerderVida();
     }
 }

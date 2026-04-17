@@ -23,6 +23,7 @@ public class Projetil : MonoBehaviour
         {
             GameManager.Instance.AdicionarScore(10);
             GameManager.Instance.InimigoDerrotado();
+            AudioManager.Instance?.TocarInimigoMorto();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
