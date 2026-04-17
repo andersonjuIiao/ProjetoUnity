@@ -99,9 +99,10 @@ public class PlayerMovement : MonoBehaviour
     {
         estado = PlayerState.Ranger;
         timerRanger = duracaoRanger;
-        GetComponent<SpriteRenderer>().color = Color.yellow;
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Ranger");
+        GetComponent<SpriteRenderer>().color = Color.white;
+        transform.localScale = new Vector3(0.175f, 0.175f, 1f);
 
-        // Troca HUD para mostrar timer Ranger
         HUDManager.Instance?.MostrarEnergia(false);
         HUDManager.Instance?.MostrarTimerRanger(true);
         HUDManager.Instance?.AtualizarTimerRanger(timerRanger, duracaoRanger);
@@ -111,9 +112,10 @@ public class PlayerMovement : MonoBehaviour
     {
         estado = PlayerState.Humano;
         shardsColetados = 0;
-        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Humano");
+        GetComponent<SpriteRenderer>().color = Color.white;
+        transform.localScale = new Vector3(0.33f, 0.33f, 1f);
 
-        // Troca HUD para mostrar energia de shards
         HUDManager.Instance?.MostrarTimerRanger(false);
         HUDManager.Instance?.MostrarEnergia(true);
         HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
@@ -152,6 +154,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Coletavel"))
+        {
+            ColetarShard();
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Coletavel"))
         {

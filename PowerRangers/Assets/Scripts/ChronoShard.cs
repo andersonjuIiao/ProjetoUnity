@@ -6,17 +6,18 @@ public class ChronoShard : MonoBehaviour
     public float amplitudeFlutuar = 0.1f;
     public float velocidadeFlutuar = 2f;
 
+    private Rigidbody2D rb;
     private Vector3 posicaoInicial;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         posicaoInicial = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // Faz o shard flutuar levemente para cima e para baixo
         float novoY = posicaoInicial.y + Mathf.Sin(Time.time * velocidadeFlutuar) * amplitudeFlutuar;
-        transform.position = new Vector3(posicaoInicial.x, novoY, posicaoInicial.z);
+        rb.MovePosition(new Vector2(posicaoInicial.x, novoY));
     }
 }
