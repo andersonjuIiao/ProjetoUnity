@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -6,8 +7,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerState estado = PlayerState.Humano;
 
     [Header("Movimento")]
-    public float velocidadeHumano = 10f;
-    public float velocidadeRanger = 14f;
+    public float velocidadeHumano = 5f;
+    public float velocidadeRanger = 7f;
 
     [Header("Chrono Shards")]
     public int shardsNecessarios = 5;
@@ -28,13 +29,23 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private AudioSource audioSource;
+    private PlayerInput playerInput;
+    private InputAction moveAction;
+    private InputAction attackAction;
+    private Vector2 movimentoAtual;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        playerInput = GetComponent<PlayerInput>();
 
-        // Começa mostrando energia de shards
+        if (playerInput != null)
+        {
+            moveAction = playerInput.actions["Move"];
+            attackAction = playerInput.actions["Attack"];
+        }
+
         HUDManager.Instance?.MostrarEnergia(true);
         HUDManager.Instance?.MostrarTimerRanger(false);
         HUDManager.Instance?.AtualizarEnergia(0, shardsNecessarios);
@@ -42,6 +53,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // Lê input de movimento
+        if (moveAction != null)
+            movimentoAtual = moveAction.ReadValue<Vector2>();
+        else
+            movimentoAtual = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
         if (estado == PlayerState.Ranger)
         {
             timerRanger -= Time.deltaTime;
@@ -52,13 +69,16 @@ public class PlayerMovement : MonoBehaviour
             if (timerRanger <= 0)
                 VoltarParaHumano();
 
-            if (Input.GetKey(KeyCode.J) && timerAtaque <= 0)
+            // Espaço ou botão Attack para atirar
+            bool atacar = attackAction != null ? attackAction.WasPressedThisFrame() : Input.GetKeyDown(KeyCode.Space);
+            if (atacar && timerAtaque <= 0)
                 Atirar();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && estado == PlayerState.Humano)
+        if (estado == PlayerState.Humano)
         {
-            if (shardsColetados >= shardsNecessarios)
+            bool atacar = attackAction != null ? attackAction.WasPressedThisFrame() : Input.GetKeyDown(KeyCode.Space);
+            if (atacar && shardsColetados >= shardsNecessarios)
                 IniciarTransformacao();
         }
     }
@@ -67,15 +87,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (estado == PlayerState.Transformando) return;
 
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-
-        if (movement != Vector2.zero)
-            ultimaDirecao = movement.normalized;
+        if (movimentoAtual != Vector2.zero)
+            ultimaDirecao = movimentoAtual.normalized;
 
         float velocidade = (estado == PlayerState.Ranger) ? velocidadeRanger : velocidadeHumano;
-        rb.MovePosition(rb.position + movement.normalized * velocidade * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movimentoAtual.normalized * velocidade * Time.fixedDeltaTime);
     }
 
     void Atirar()
